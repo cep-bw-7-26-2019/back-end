@@ -13,8 +13,8 @@
 |  GET   | /events/:id/purchases | Event completed purchases                   |      |
 |  POST  | /events/:id/purchases | Add item to shopping cart                   |      |
 |  GET   | /events/:id/cart      | Shopping List for the Event                 |      |
-<!-- |  PUT   | /tasks/:id            | Update task details                         |      |
-| DELETE | /tasks/:id            | Remove task                                 |      | -->
+|  PUT   | /tasks/:id            | Update task details                         |      |
+| DELETE | /tasks/:id            | Remove task                                 |      |
 |  PUT   | /purchases/:id        | Update purchase (used to mark as completed) |      |
 | DELETE | /purchases/:id        | Delete purchase                             |      |
 |  POST  | /auth/register        | Register new user                           |      |
