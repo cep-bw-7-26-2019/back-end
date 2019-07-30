@@ -41,6 +41,7 @@ router.post('./login', (req, res) => {
     });
 });
 
+
 function generateToken(user) {
     const jwtPayload = {
         subject: user.id,
