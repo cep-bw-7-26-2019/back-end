@@ -23,7 +23,7 @@ server.use('/api/tasks', taskRouter);
 server.use('/api/vendors', vendorRouter);
 
 server.get('/', (req, res) => {
-    res.send('Eventrs Assemble!!');
+  res.send('Eventrs Assemble!!');
 });
 
 module.exports = server;

@@ -7,6 +7,7 @@ module.exports = {
     remove,
 };
 
+
 function update(id, changes) {
     return db(events)
     .where({ id })

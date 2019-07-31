@@ -1,6 +1,9 @@
- Eventr
+# Eventr
+
 ## Back end
+
 ### API
+
 | Method | Endpoint              | Description                                 | Data |
 | :----: | :-------------------- | :------------------------------------------ | :--- |
 |  GET   | /events               | List of active events                       |      |
