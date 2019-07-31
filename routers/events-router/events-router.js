@@ -1,25 +1,67 @@
 const express = require('express');
 
+const Events = require('./events-model.js');
+
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('List of active events')
+router.get('/events', (req, res) => {
+    events
+    .find()
+    .then(() => {
+        res.status(200).json(events)
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
 });
 
 router.get('/:id', (req, res)  => {
+    
     res.send(' View event details')
 });
 
 router.post('/events', (req, res) => {
-    res.send('Create a new Event ')
+    const eventInfo = req.body;
+    console.log(eventInfo);
+    
+    Events.add(eventInfo).then(event => {
+        res.status(201).json(event);
+    })
+    .catch(error => {
+        res.status(500).json(error)
+    })
 });
 
 router.put('/events/:id', (req, res) => {
-    res.send('Update event details ')
+    const id = req.params.id;
+    const changes = req.body;
+
+    Events.update(id, changes).then(updated => {
+        if (updated) {
+            res.status(200).json(updated);
+        } else {
+
+        }
+    })
+    .catch(error => {
+        res.status(500).json(error);
+    })
 });
 
 router.delete('/events/:id', (req, res) => {
-    res.send('Inactivate and event')
+    const { id } = req.params;
+    
+    Events.remove(id)
+    .then(deleted => {
+        if(deleted) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({message: "can't find that event"})
+        }
+    })
+    .catch(error => {
+        res.status(500).json(error);
+    })
 });
 
 router.get('/events/:id/tasks', (req, res) => {
