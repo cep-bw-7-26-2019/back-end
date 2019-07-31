@@ -15,10 +15,24 @@ router.get('/events', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res)  => {
-    
-    res.send(' View event details')
+router.get('/:id', async (req, res)  => {
+    try {
+        const event = await Events.findById(req.params.id);
+
+    if (event) {
+        res.status(200).json(event);
+    } else {
+        res.status(404).json({ message: 'Vendor not found' });
+    }
+} catch (error) {
+    // log error to server
+        console.log(error);
+        res.status(500).json({
+        message: 'Error retrieving the vendor',
+    });
+}
 });
+
 
 router.post('/events', (req, res) => {
     const eventInfo = req.body;
@@ -40,7 +54,7 @@ router.put('/events/:id', (req, res) => {
         if (updated) {
             res.status(200).json(updated);
         } else {
-
+            res.status(404).json({ message: 'The event could not be found' });
         }
     })
     .catch(error => {
