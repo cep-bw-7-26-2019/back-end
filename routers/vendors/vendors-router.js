@@ -1,5 +1,7 @@
 const express = require('express');
 
+const Vendors = require('./vendors-model.js')
+
 const router = express.Router();
 
 router.get('/vendors', (req, res) => {
@@ -12,7 +14,6 @@ router.get('/vendors', (req, res) => {
         res.status(500).json(err);
     });
 });
-
 
 
 router.get('/vendors/:id', async (req, res) => {
@@ -31,12 +32,9 @@ router.get('/vendors/:id', async (req, res) => {
         message: 'Error retrieving the vendor',
     });
 }
-
-
 });
 
 router.post('/vendors', (req, res) => {
-    router.post('/vendors', (req, res) => {
         const vendorInfo = req.body;
         console.log(vendorInfo);
         
@@ -47,10 +45,8 @@ router.post('/vendors', (req, res) => {
             res.status(500).json(error)
         })
     });
-});
 
 router.put('/vendors/:id', (req, res) => {
-    router.put('/vendors/:id', (req, res) => {
         const id = req.params.id;
         const changes = req.body;
     
@@ -65,7 +61,7 @@ router.put('/vendors/:id', (req, res) => {
             res.status(500).json(error);
         })
     });
-});
+
 
 router.delete('/vendors/:id', (req, res) => {
     const { id } = req.params;
