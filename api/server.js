@@ -2,13 +2,12 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 
-
-const authRouter = require('../routers/auth/auth-router.js');
-const userRouter = require('../routers/users/users-router.js');
-const eventRouter = require('../routers/events-router/events-router.js');
-const purchaseRouter = require('../routers/purchases/purchase-router.js');
-const taskRouter = require('../routers/tasks/task-router.js');
-const vendorRouter = require('../routers/vendors/vendors-router.js');
+const authRouter = require('../auth/auth-router.js');
+const userRouter = require('../users/users-router.js');
+const eventRouter = require('../events/events-router.js');
+const purchaseRouter = require('../purchases/purchase-router.js');
+const taskRouter = require('../tasks/task-router.js');
+const vendorRouter = require('../vendors/vendors-router.js');
 
 const server = express();
 
@@ -23,10 +22,8 @@ server.use('/api/purchases', purchaseRouter);
 server.use('/api/tasks', taskRouter);
 server.use('/api/vendors', vendorRouter);
 
-
 server.get('/', (req, res) => {
-    res.send('Eventrs Assemble!!')
+    res.send('Eventrs Assemble!!');
 });
 
-
-module.exports = server; 
+module.exports = server;

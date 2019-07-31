@@ -1,77 +1,101 @@
 exports.up = function(knex) {
-    return knex.schema
-        .createTable("users", tbl => {
-        tbl.increments();
-        tbl.integer("company_id");
-        tbl.integer("role_id", 128);
-        tbl.varchar("email", 128);
-        tbl.varchar("password", 4000)
-            .unique()
-            .notNullable();
-        })
-
+return knex.schema
     .createTable("companies", tbl => {
         tbl.increments();
-        tbl.varchar("name", 255)
-            .unique()
-            .notNullable();
-        })
+        tbl
+            .string("name", 255)
+            .notNullable()
+            .unique();
+    })
 
     .createTable("roles", tbl => {
         tbl.increments();
-        tbl.varchar("name", 255)
-            .unique()
-            .notNullable();
-        })
+        tbl
+            .string("name", 255)
+            .notNullable()
+            .unique();
+    })
+
+    .createTable("users", tbl => {
+        tbl.increments();
+        tbl
+            .integer("company_id")
+            .unsigned()
+            .notNullable()
+            .references("id")
+            .inTable("companies");
+        tbl
+            .integer("role_id", 128)
+            .unsigned()
+            .notNullable()
+            .references("id")
+            .inTable("roles");
+        tbl.string("email", 128);
+        tbl.string("password", 4000).notNullable();
+    })
 
     .createTable("events", tbl => {
         tbl.increments();
-        tbl.varchar("name", 255);
-        tbl.varchar("description", 4000);
+        tbl.string("name", 255).notNullable();
+        tbl.string("description", 4000);
         tbl.date("date");
         tbl.time("time");
         tbl.decimal("budget");
-        tbl.integer("user_id")
-            .unique()
-            .notNullable();
-        })
+        tbl
+            .integer("user_id")
+            .unsigned()
+            .notNullable()
+            .references("id")
+            .inTable("users");
+    })
 
     .createTable("vendors", tbl => {
         tbl.increments();
-        tbl.varchar("name", 255)
-            .unique()
-            .notNullable();
-        })
+        tbl
+            .string("name", 255)
+            .notNullable()
+            .unique();
+    })
 
     .createTable("tasks", tbl => {
         tbl.increments();
-        tbl.varchar("description", 4000);
-        tbl.integer("event_id");
-        tbl.boolean("done")
-            .unique()
-            .notNullable();
-        })
+        tbl.string("description", 4000);
+        tbl
+            .integer("event_id")
+            .unsigned()
+            .notNullable()
+            .references("id")
+            .inTable("events");
+        tbl.boolean("done");
+    })
 
     .createTable("purchases", tbl => {
         tbl.increments();
-        tbl.varchar('product', 255)
-        tbl.integer('event_id')
-        tbl.varchar('vendor_id')
-        tbl.decimal('quantity')
-        tbl.decimal('cost')
-            .unique()
+        tbl.string("item", 255);
+        tbl
+            .integer("event_id")
+            .unsigned()
             .notNullable()
-
-        
-    })
+            .references("id")
+            .inTable("events");
+        tbl
+            .integer("vendor_id")
+            .unsigned()
+            .notNullable()
+            .references("id")
+            .inTable("vendors");
+        tbl.decimal("quantity");
+        tbl.decimal("cost");
+    });
 };
 
 exports.down = function(knex) {
     return knex.schema
-        .dropTableIfExists("users")
-        .dropTableIfExists("companies")
-        .dropTableIfExists("roles")
-        .dropTableIfExists("events")
-        .dropTableIfExists("vendors")
-        .dropTableIfExists("tasks")
-    };
+    .dropTableIfExists("purchases")
+    .dropTableIfExists("tasks")
+    .dropTableIfExists("vendors")
+    .dropTableIfExists("events")
+    .dropTableIfExists("users")
+    .dropTableIfExists("roles")
+    .dropTableIfExists("companies");
+};
