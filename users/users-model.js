@@ -7,13 +7,8 @@ module.exports = {
   findById,
 };
 
-function find(department) {
-  const query = db('users').select('id', 'username', 'department');
-
-  if (department) {
-    query.where({ department });
-  }
-  return query;
+function find() {
+  return db('users').select('username', 'email', 'role', 'company', 'id');
 }
 
 function findBy(filter) {
@@ -21,13 +16,13 @@ function findBy(filter) {
 }
 
 async function add(user) {
-  const [id] = await db('users').insert(user);
-
+  const [id] = await db('users').insert(user, 'id');
   return findById(id);
 }
 
 function findById(id) {
   return db('users')
     .where({ id })
-    .first();
+    .first()
+    .select('username', 'email', 'role', 'company', 'id')
 }

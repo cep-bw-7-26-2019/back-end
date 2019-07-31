@@ -35,8 +35,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', (req, res) => {
   const eventInfo = req.body;
-  console.log(eventInfo);
-
+  
   Events.add(eventInfo)
     .then(event => {
       res.status(201).json(event);
