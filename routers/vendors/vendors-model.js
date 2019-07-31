@@ -31,7 +31,7 @@ function findById(id) {
     .first();
 }
 
-async function add(vendor) {
+async function add(vendor) {   //<<<<<<<<<< async??
     const [id] = await db('vendors').insert(vendor);
 
     return findById(id);
