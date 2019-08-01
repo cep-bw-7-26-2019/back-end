@@ -1,6 +1,9 @@
 # Eventr API
+
 This API accepts and returns JSON.
+
 ### Endpoints
+
 | Method | Endpoint    | Description          | Notes                                                                     |
 | :----: | :---------- | :------------------- | :------------------------------------------------------------------------ |
 |  GET   | /events     | List of events.      | If the client provides a user Id, only events for that user are returned. |
@@ -8,14 +11,23 @@ This API accepts and returns JSON.
 |  POST  | /events     | Create a new Event   | The client must send a valid JSON body with the event information.        |
 |  PUT   | /events/:id | Update event details | Send an object with the changes that will be applied to the event         |
 | DELETE | /events/:id | Inactivate and event | Delete an event and all it's tasks and purchases                          |
+
 ## Schemas
+
 The properties for the resources manage through the API are listed below.
+
 Clients must provide a value for all properties marked as `required`.
+
 A property marked as `unique` means that the same value cannot be repeated for different records. For example if a record exist with a particular `email` the API will return an error if a client tries to add another record with the same `email`.
+
 The `vendors` are used when making `purchases` of products or services related to an `event`.
+
 A `task` is an activity that needs to be completed as part of organizing an `event`.
+
 A `purchase` is a record of products or services acquired to complete an `event`. The `cost` is the total cost of the `purchase`. If 10 boxes of confetti are bought at $5 each, the cost will be $50.
+
 ### Events
+
 | Property    | Type    | Metadata                                                                |
 | :---------- | :------ | :---------------------------------------------------------------------- |
 | id          | integer | Primary Key, generated automatically by the database                    |
@@ -26,7 +38,9 @@ A `purchase` is a record of products or services acquired to complete an `event`
 | time        | string  | Optional. Formatted as HH:MM                                            |
 | budget      | decimal | Optional. Floating point number                                         |
 | user_id     | integer | Must be the id of an existing user                                      |
+
 #### Sample Event Object for a POST
+
 ```json
 {
   "name": "Showcase Eventr",
@@ -38,7 +52,9 @@ A `purchase` is a record of products or services acquired to complete an `event`
   "location": "Utah"
 }
 ```
+
 ### Users
+
 | Property | Type    | Metadata                                             |
 | :------- | :------ | :--------------------------------------------------- |
 | id       | integer | Primary Key, generated automatically by the database |
@@ -47,18 +63,24 @@ A `purchase` is a record of products or services acquired to complete an `event`
 | email    | string  | Required, unique. Max length 128 characters          |
 | company  | string  | Optional. Max length 255 characters                  |
 | role     | string  | Optional. Max length 255 characters                  |
+
 ### Vendors
+
 | Property | Type    | Metadata                                             |
 | :------- | :------ | :--------------------------------------------------- |
 | id       | integer | Primary Key, generated automatically by the database |
 | name     | string  | Required, Unique. Max length 255 characters          |
+
 ### Tasks
+
 | Property    | Type    | Metadata                                             |
 | :---------- | :------ | :--------------------------------------------------- |
 | id          | integer | Primary Key, generated automatically by the database |
 | description | string  | Required. Max length 4000 characters                 |
 | event_id    | integer | Must be the id of an existing event                  |
+
 ### Purchases
+
 | Property  | Type    | Metadata                                             |
 | :-------- | :------ | :--------------------------------------------------- |
 | id        | integer | Primary Key, generated automatically by the database |
