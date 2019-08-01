@@ -21,7 +21,7 @@ exports.up = function(knex) {
       tbl.date('date');
       tbl.string('time');
       tbl.string('location', 4000);
-      tbl.decimal('budget');
+      tbl.decimal('budget', null);
       tbl
         .integer('user_id')
         .unsigned()
@@ -71,7 +71,7 @@ exports.up = function(knex) {
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
       tbl.decimal('quantity');
-      tbl.decimal('cost');
+      tbl.decimal('cost', null);
     });
 };
 exports.down = function(knex) {
