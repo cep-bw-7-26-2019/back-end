@@ -21,6 +21,18 @@ The properties for the resources manage through the API are listed below.
 | time        | string  | Optional. Formatted as HH:MM                                            |
 | budget      | decimal | Optional. Floating point number                                         |
 | user_id     | integer | Must be the id of an existing user                                      |
+#### Sample Event Object for a POST
+```json
+{
+  "name": "Showcase Eventr",
+  "description": "Present Eventr for Build Weeks",
+  "date": "2019-08-02",
+  "time": "02:00 PM",
+  "budget": 1000.0,
+  "user_id": 1,
+  "location": "Utah"
+}
+```
 ### Users
 | Property | Type    | Metadata                                         |
 | :------- | :------ | :----------------------------------------------- |
@@ -30,4 +42,3 @@ The properties for the resources manage through the API are listed below.
 | email    | string  | Optional. Max length 128 characters              |
 | company  | string  | Optional. Max length 255 characters              |
 | role     | string  | Optional. Max length 255 characters              |
-
