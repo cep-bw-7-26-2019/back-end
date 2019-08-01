@@ -1,4 +1,5 @@
-# Eventr API
+# eventr-api
+
 This API accepts and returns JSON.
 ### Endpoints
 | Method | Endpoint    | Description          | Notes                                                                     |
