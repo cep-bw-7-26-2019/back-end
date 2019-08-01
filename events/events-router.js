@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
       res.status(200).json(events);
     })
     .catch(err => {
-      res.status(500).json({err: 'failed!!!!'});
+      res.status(500).json({err: 'could not retrieve the list of events'});
     });
 });
 

@@ -4,13 +4,15 @@ This API accepts and returns JSON.
 
 ### Endpoints
 
-| Method | Endpoint    | Description          | Notes                                                                     |
-| :----: | :---------- | :------------------- | :------------------------------------------------------------------------ |
-|  GET   | /events     | List of events.      | If the client provides a user Id, only events for that user are returned. |
-|  GET   | /events/:id | View event details   | Returns the event or a 404 if one is not found for the provided id        |
-|  POST  | /events     | Create a new Event   | The client must send a valid JSON body with the event information.        |
-|  PUT   | /events/:id | Update event details | Send an object with the changes that will be applied to the event         |
-| DELETE | /events/:id | Inactivate and event | Delete an event and all it's tasks and purchases                          |
+| Method | Endpoint       | Description          | Notes                                                                     |
+| :----: | :------------- | :------------------- | :------------------------------------------------------------------------ |
+|  GET   | /events        | List of events.      | If the client provides a user Id, only events for that user are returned. |
+|  GET   | /events/:id    | View event details   | Returns the event or a 404 if one is not found for the provided id        |
+|  POST  | /events        | Create a new Event   | The client must send a valid JSON body with the event information.        |
+|  PUT   | /events/:id    | Update event details | Send an object with the changes that will be applied to the event         |
+| DELETE | /events/:id    | Inactivate and event | Delete an event and all it's tasks and purchases                          |
+|  POST  | /auth/register | Register new user    |                                                                           |
+|  POST  | /auth/login    | Login                |                                                                           |
 
 ## Schemas
 
