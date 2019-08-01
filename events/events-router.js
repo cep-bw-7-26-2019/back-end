@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
       res.status(404).json({ message: 'Event not found' });
     }
   } catch (error) {
-    // log error to server
+    // log error to server  
     console.log(error);
     res.status(500).json({
       message: 'Error retrieving the event',
