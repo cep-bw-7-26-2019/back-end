@@ -4,15 +4,25 @@ This API accepts and returns JSON.
 
 ### Endpoints
 
-| Method | Endpoint       | Description          | Notes                                                                     |
-| :----: | :------------- | :------------------- | :------------------------------------------------------------------------ |
-|  GET   | /events        | List of events.      | If the client provides a user Id, only events for that user are returned. |
-|  GET   | /events/:id    | View event details   | Returns the event or a 404 if one is not found for the provided id        |
-|  POST  | /events        | Create a new Event   | The client must send a valid JSON body with the event information.        |
-|  PUT   | /events/:id    | Update event details | Send an object with the changes that will be applied to the event         |
-| DELETE | /events/:id    | Inactivate and event | Delete an event and all it's tasks and purchases                          |
-|  POST  | /auth/register | Register new user    |                                                                           |
-|  POST  | /auth/login    | Login                |                                                                           |
+| Method | Endpoint              | Description          | Notes                                                                            |
+| :----: | :-------------------- | :------------------- | :------------------------------------------------------------------------------- |
+|  GET   | /api/events           | List of events.      | If the client provides a user Id, only events for that user are returned.        |
+|  GET   | /api/events/:id       | View event details   | Returns the event or a 404 if one is not found for the provided id               |
+|  POST  | /api/events           | Create a new Event   | The client must send a valid JSON body with the event information.               |
+|  PUT   | /api/events/:id       | Update event details | Send an object with the changes that will be applied to the event                |
+| DELETE | /api/events/:id       | Inactivate and event | Delete an event and all it's tasks and purchases                                 |
+|  POST  | /api/auth/register    | Register new user    |                                                                                  |
+|  POST  | /api/auth/login       | Login                |                                                                                  |
+|  GET   | /api/events/:id/tasks | List event tasks     | Returns and empty array if there are no tasks for the event.                     |
+|  POST  | /api/events/:id/tasks | Add task to event    | Client must provide valid JSON body conforming to the task schema provided below |
+
+### About Authentication
+
+The API uses JSON Web Tokens (JWT) to handle authentication.
+
+When a client logs in, the API returns a `token` that the client must hold on to.
+
+All endpoints, other than the `/auth` endpoints require that the client attaches the token in the `Authorization` header for all requests.
 
 ## Schemas
 
@@ -52,6 +62,47 @@ A `purchase` is a record of products or services acquired to complete an `event`
   "budget": 1000.0,
   "user_id": 1,
   "location": "Utah"
+}
+```
+
+#### Sample Event Details Object Returned by the API
+
+```json
+{
+  "id": 1,
+  "name": "Showcase Eventr",
+  "description": "Present Eventr for Build Weeks",
+  "date": "2019-08-02",
+  "time": "02:00 PM",
+  "location": "Utah",
+  "budget": 1000,
+  "user_id": 1,
+  "tasks": [
+    {
+      "id": 1,
+      "description": "finish auth endpoints",
+      "event_id": 1,
+      "done": null
+    },
+    {
+      "id": 2,
+      "description": "finish event endpoints",
+      "event_id": 1,
+      "done": null
+    },
+    {
+      "id": 3,
+      "description": "finish add task endpoint",
+      "event_id": 1,
+      "done": null
+    },
+    {
+      "id": 4,
+      "description": "finish add purchases endpoint",
+      "event_id": 1,
+      "done": null
+    }
+  ]
 }
 ```
 

@@ -5,13 +5,13 @@ const Events = require('./events-model.js');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  Events
-    .find()
-    .then((events) => {
+  Events.find()
+    .where({ user_id: req.user.id })
+    .then(events => {
       res.status(200).json(events);
     })
     .catch(err => {
-      res.status(500).json({err: 'could not retrieve the list of events'});
+      res.status(500).json({ err: 'Could not retrieve the list of events' });
     });
 });
 
@@ -34,15 +34,22 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const eventInfo = req.body;
-  
-  Events.add(eventInfo)
-    .then(event => {
-      res.status(201).json(event);
-    })
-    .catch(error => {
-      res.status(500).json(error);
-    });
+  const eventInfo = { ...req.body, user_id: req.user.id };
+
+  if (eventIsValid(eventInfo)) {
+    Events.add(eventInfo)
+      .then(event => {
+        console.log('router event', event);
+        res.status(201).json(event);
+      })
+      .catch(error => {
+        res.status(500).json(error);
+      });
+  } else {
+    res
+      .status(400)
+      .json({ message: 'Please provide a name and a user id for the event' });
+  }
 });
 
 router.put('/:id', (req, res) => {
@@ -79,11 +86,27 @@ router.delete('/:id', (req, res) => {
 });
 
 router.get('/:id/tasks', (req, res) => {
-  res.send('List event tasks ');
+  res.send('Add task to event');
 });
 
 router.post('/:id/tasks', (req, res) => {
-  res.send('Add task to event');
+  const taskInfo = { ...req.body, event_id: req.params.id };
+
+  Events.findById(req.params.id).then(event => {
+    if (event && event.user_id === req.user.id) {
+      Events.addTask(taskInfo)
+        .then(event => {
+          res.status(201).json(event);
+        })
+        .catch(() => {
+          res
+            .status(500)
+            .json({ message: 'Error adding the task to the event' });
+        });
+    } else {
+      res.status(400).json({ message: 'You cannot add tasks to this event' });
+    }
+  });
 });
 
 router.get('/:id/purchases', (req, res) => {
@@ -97,5 +120,9 @@ router.post('/:id/purchases', (req, res) => {
 router.get('/:id/cart', (req, res) => {
   res.send('Shopping List for the Event');
 });
+
+function eventIsValid(event) {
+  return event.name && event.user_id;
+}
 
 module.exports = router;

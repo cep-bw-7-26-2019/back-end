@@ -3,10 +3,8 @@ const router = require('express').Router();
 const Users = require('./users-model.js');
 const restricted = require('../auth/restricted-middleware.js');
 
-router.get('/', restricted, (req, res) => {
-  const department = req.jwtToken.department;
-
-  Users.find(department)
+router.get('/', (req, res) => {
+  Users.find()
     .then(users => {
       res.json(users);
     })
