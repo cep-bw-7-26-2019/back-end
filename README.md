@@ -12,6 +12,9 @@ This API accepts and returns JSON.
 The properties for the resources manage through the API are listed below.
 Clients must provide a value for all properties marked as `required`.
 A property marked as `unique` means that the same value cannot be repeated for different records. For example if a record exist with a particular `email` the API will return an error if a client tries to add another record with the same `email`.
+The `vendors` are used when making `purchases` of products or services related to an `event`.
+A `task` is an activity that needs to be completed as part of organizing an `event`.
+A `purchase` is a record of products or services acquired to complete an `event`. The `cost` is the total cost of the `purchase`. If 10 boxes of confetti are bought at $5 each, the cost will be $50.
 ### Events
 | Property    | Type    | Metadata                                                                |
 | :---------- | :------ | :---------------------------------------------------------------------- |
@@ -45,21 +48,17 @@ A property marked as `unique` means that the same value cannot be repeated for d
 | company  | string  | Optional. Max length 255 characters                  |
 | role     | string  | Optional. Max length 255 characters                  |
 ### Vendors
-The vendors are used when making purchases of products or services related to an event.
 | Property | Type    | Metadata                                             |
 | :------- | :------ | :--------------------------------------------------- |
 | id       | integer | Primary Key, generated automatically by the database |
 | name     | string  | Required, Unique. Max length 255 characters          |
 ### Tasks
-A `task` is an activity that needs to be completed as part of organizing an event.
 | Property    | Type    | Metadata                                             |
 | :---------- | :------ | :--------------------------------------------------- |
 | id          | integer | Primary Key, generated automatically by the database |
 | description | string  | Required. Max length 4000 characters                 |
 | event_id    | integer | Must be the id of an existing event                  |
 ### Purchases
-A record of products or services acquired to complete an event.
-The `cost` is the total cost of the purchase. If 10 boxes of confetti are bought at $5 each, the cost will be $50.
 | Property  | Type    | Metadata                                             |
 | :-------- | :------ | :--------------------------------------------------- |
 | id        | integer | Primary Key, generated automatically by the database |
