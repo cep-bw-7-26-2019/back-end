@@ -22,13 +22,13 @@ router.get('/:id', async (req, res) => {
     if (event) {
       res.status(200).json(event);
     } else {
-      res.status(404).json({ message: 'Vendor not found' });
+      res.status(404).json({ message: 'Event not found' });
     }
   } catch (error) {
     // log error to server
     console.log(error);
     res.status(500).json({
-      message: 'Error retrieving the vendor',
+      message: 'Error retrieving the event',
     });
   }
 });

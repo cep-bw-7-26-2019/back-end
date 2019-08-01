@@ -26,7 +26,7 @@ async function add(event) {
 }
 
 function update(id, changes) {
-    return db(events)
+    return db('events')
     .where({ id })
     .update(changes);
 }
