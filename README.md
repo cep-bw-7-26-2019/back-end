@@ -10,10 +10,12 @@ This API accepts and returns JSON.
 | DELETE | /events/:id | Inactivate and event | Delete an event and all it's tasks and purchases                          |
 ## Schemas
 The properties for the resources manage through the API are listed below.
+Clients must provide a value for all properties marked as `required`.
+A property marked as `unique` means that the same value cannot be repeated for different records. For example if a record exist with a particular `email` the API will return an error if a client tries to add another record with the same `email`.
 ### Events
 | Property    | Type    | Metadata                                                                |
 | :---------- | :------ | :---------------------------------------------------------------------- |
-| id          | integer | Primary Key, generated automatically by database                        |
+| id          | integer | Primary Key, generated automatically by the database                    |
 | name        | string  | Required. Max length 255 characters                                     |
 | description | string  | Optional. Max length 4000 characters                                    |
 | location    | string  | Optional. Max length 4000 characters                                    |
@@ -34,11 +36,36 @@ The properties for the resources manage through the API are listed below.
 }
 ```
 ### Users
-| Property | Type    | Metadata                                         |
-| :------- | :------ | :----------------------------------------------- |
-| id       | integer | Primary Key, generated automatically by database |
-| username | string  | Required. Max length 128 characters              |
-| password | string  | Required. Max length 4000 characters             |
-| email    | string  | Optional. Max length 128 characters              |
-| company  | string  | Optional. Max length 255 characters              |
-| role     | string  | Optional. Max length 255 characters              |
+| Property | Type    | Metadata                                             |
+| :------- | :------ | :--------------------------------------------------- |
+| id       | integer | Primary Key, generated automatically by the database |
+| username | string  | Required, Unique. Max length 128 characters          |
+| password | string  | Required. Max length 4000 characters                 |
+| email    | string  | Required, unique. Max length 128 characters          |
+| company  | string  | Optional. Max length 255 characters                  |
+| role     | string  | Optional. Max length 255 characters                  |
+### Vendors
+The vendors are used when making purchases of products or services related to an event.
+| Property | Type    | Metadata                                             |
+| :------- | :------ | :--------------------------------------------------- |
+| id       | integer | Primary Key, generated automatically by the database |
+| name     | string  | Required, Unique. Max length 255 characters          |
+### Tasks
+A `task` is an activity that needs to be completed as part of organizing an event.
+| Property    | Type    | Metadata                                             |
+| :---------- | :------ | :--------------------------------------------------- |
+| id          | integer | Primary Key, generated automatically by the database |
+| description | string  | Required. Max length 4000 characters                 |
+| event_id    | integer | Must be the id of an existing event                  |
+### Purchases
+A record of products or services acquired to complete an event.
+The `cost` is the total cost of the purchase. If 10 boxes of confetti are bought at $5 each, the cost will be $50.
+| Property  | Type    | Metadata                                             |
+| :-------- | :------ | :--------------------------------------------------- |
+| id        | integer | Primary Key, generated automatically by the database |
+| item      | string  | Required. Max length 255 characters                  |
+| event_id  | integer | Must be the id of an existing event                  |
+| vendor_id | integer | Must be the id of an existing vendor                 |
+| quantity  | decimal | Optional. Floating point number                      |
+| cost      | decimal | Optional. Floating point number                      |
+
