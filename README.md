@@ -68,4 +68,3 @@ The `cost` is the total cost of the purchase. If 10 boxes of confetti are bought
 | vendor_id | integer | Must be the id of an existing vendor                 |
 | quantity  | decimal | Optional. Floating point number                      |
 | cost      | decimal | Optional. Floating point number                      |
-
